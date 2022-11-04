@@ -37,25 +37,66 @@ afterEach(async () => {
   await browser.close();
 });
 
-describe('the page', () => {
-  it('should contain a heading at the top of the page', async () => {
-      var headings = await page.$$('body > h1:first-child');
-      expect(headings.length).toBe(1);
+describe('the font on the body of the page', () => {
+  it('should be Georgia', async () => {
+    const fontFamily = await page.$eval('body', (body) => {
+      let style = window.getComputedStyle(body);
+      return style.getPropertyValue('font-family');
+    });
+      
+    expect(fontFamily).toMatch(/Georgia/g);
   });
 });
 
-describe('the page heading', () => {
-  it('should have the id page-heading', async () => {
-      var headings = await page.$$('body > h1:first-child[id="page-heading"]');
-      expect(headings.length).toBe(1);
+describe('the fallback font on the body of the page', () => {
+  it(`should be 'Times New Roman'`, async () => {
+    const fontFamily = await page.$eval('body', (body) => {
+      let style = window.getComputedStyle(body);
+      return style.getPropertyValue('font-family');
+    });
+      
+    expect(fontFamily).toMatch(/Georgia.*,.*["']Times New Roman["']/g);
   });
 });
 
-describe('the page heading', () => {
-  it('should contain the text Task Board', async () => {
-      var heading = await page.$eval('#page-heading', (heading) => {
-        return heading.innerHTML.trim();
-      });
-      expect(heading).toBe('Task Board');
+describe('the next fallback font on the body of the page', () => {
+  it('should be Times', async () => {
+    const fontFamily = await page.$eval('body', (body) => {
+      let style = window.getComputedStyle(body);
+      return style.getPropertyValue('font-family');
+    });
+      
+    expect(fontFamily).toMatch(/Georgia.*,.*["']Times New Roman["'].*,.*Times/g);
+  });
+});
+
+describe('the last fallback font on the body of the page', () => {
+  it('should be serif', async () => {
+    const fontFamily = await page.$eval('body', (body) => {
+      let style = window.getComputedStyle(body);
+      return style.getPropertyValue('font-family');
+    });
+      
+    expect(fontFamily).toMatch(/Georgia.*,.*["']Times New Roman["'].*,.*Times.*,.*serif/g);
+  });
+});
+
+describe('the kanban column headings', () => {
+  it('should be bolder', async () => {
+    const fontWeight = await page.$eval('.task-status', (taskStatus) => {
+      let style = window.getComputedStyle(taskStatus);
+      return style.getPropertyValue('font-weight');
+    });
+      
+    expect(fontWeight).toBe('700');
+  });
+
+  it('should have the first letter of each word capatilized through CSS styling', async () => {
+    const textTransform = await page.$eval('.task-status', (taskStatus) => {
+      let style = window.getComputedStyle(taskStatus);
+      return style.getPropertyValue('text-transform');
+    });
+    
+    expect(textTransform).toBe('capitalize');
   });
 });

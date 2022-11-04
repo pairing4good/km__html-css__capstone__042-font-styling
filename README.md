@@ -1,15 +1,20 @@
-# 041 Task Application Heading
+# 042 Font Styling
 
 ```
 Given that the application is available 
-When a user navigates to the application 
-Then they see a large heading at the top of the page that reads Task Board
+When a user views the application on multiple browsers and devices 
+Then the look and feel of the application is consistent
 ```
 
 Steps:
-- the page should contain a heading at the top of the page
-- the `page heading` should have the id `page-heading`
-- the `page-heading` should contain the text `Task Board`
+- the font on the body of the page should be Georgia
+- the fallback font on the body of the page should be 'Times New Roman'
+- the next fallback font on the body of the page should be Times
+- the last fallback font on the body of the page should be serif
+- the kanban column headings should be bold
+- the kanban column headings should have the first letter of each word capitalized through CSS styling
 
 Resources:
-- https://www.w3schools.com/html/html_headings.asp
+- https://www.w3schools.com/cssref/pr_font_font-family.asp
+- https://www.w3schools.com/cssref/pr_font_weight.asp
+- https://www.w3schools.com/cssref/pr_text_text-transform.asp

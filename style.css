@@ -26,13 +26,6 @@
     min-width: 175px;
 }
 
-.task-status {
-    border-radius: 10px;
-    text-align: center;
-    min-width: 4em;
-    height: 1em;
-}
-
 .left-side {
     flex: 90%;
 }
